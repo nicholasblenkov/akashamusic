@@ -371,6 +371,8 @@ img { display: block; max-width: 100%; }
   aspect-ratio: 1;
   background: #c4b8aa;
   margin-bottom: 0.75rem;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .release__title {
