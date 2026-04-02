@@ -460,6 +460,65 @@ img { display: block; max-width: 100%; }
   padding-bottom: 1rem;
 }
 
+/* --- Featured Videos variant --- */
+.featured--videos {
+  height: auto;
+  background: var(--black);
+  padding: 4rem var(--page-pad) 5rem;
+}
+
+.featured__videos-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.featured__videos-inner > .section-label {
+  margin-bottom: 2rem;
+}
+
+.featured__video-main {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  margin-bottom: 1.5rem;
+}
+
+.featured__video-main iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.featured__video-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.featured__video-half {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+}
+
+.featured__video-half iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .featured__video-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* ===================================================
    PRESS
