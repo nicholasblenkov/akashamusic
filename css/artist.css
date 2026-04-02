@@ -247,7 +247,7 @@ img { display: block; max-width: 100%; }
 }
 
 .biography__inner {
-  max-width: 780px;
+  max-width: 920px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 180px 1fr;
