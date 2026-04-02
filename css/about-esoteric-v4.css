@@ -587,7 +587,7 @@ img { display: block; max-width: 100%; }
 
 
 /* ===================================================
-   SCROLL SNAP — subtle soft brakes
+   SCROLL SNAP — section brakes
    =================================================== */
 html {
   scroll-snap-type: y proximity;
@@ -595,6 +595,31 @@ html {
 
 .snap-section {
   scroll-snap-align: start;
+}
+
+.article-bottom,
+.reverse-void {
+  scroll-snap-align: start;
+}
+
+/* ===================================================
+   FAST TRANSITIONS — elements resolve within 200ms
+   =================================================== */
+.descent__text,
+.orb-section__content,
+.orbit__card,
+.principle__watermark,
+.principle__content,
+.arch__text,
+.return__text {
+  transition: opacity 200ms ease-out, transform 200ms ease-out, filter 200ms ease-out, color 200ms ease-out;
+}
+
+/* Snapped-to-done state: JS adds this class */
+.snap-done {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
 }
 
 

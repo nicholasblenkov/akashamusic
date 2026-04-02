@@ -234,14 +234,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const bg = lerpColor(descentColors, progress);
     descentSection.style.backgroundColor = rgbStr(bg);
 
-    // Text fades
+    // Text fades — snap to visible when past midpoint of their range
     descentTexts.forEach((el, i) => {
       const range = descentRanges[i];
       if (!range) return;
 
-      const opacity = envelope(progress, range.in[0], range.in[1], range.out[0], range.out[1]);
-      const fadeInT = easeInOut(clamp((progress - range.in[0]) / (range.in[1] - range.in[0]), 0, 1));
-      const yOffset = 40 * (1 - fadeInT);
+      const midpoint = (range.in[0] + range.out[1]) / 2;
+      const isPastMid = progress > midpoint;
+
+      // If we're past the midpoint of this element's active range, show it fully
+      // If we're within the active range, animate normally
+      // If we're before the range, hide it
+      let opacity, yOffset;
+
+      if (isPastMid && progress < range.out[1]) {
+        // Past midpoint but still in range — snap to fully visible
+        opacity = 1;
+        yOffset = 0;
+      } else {
+        opacity = envelope(progress, range.in[0], range.in[1], range.out[0], range.out[1]);
+        const fadeInT = easeInOut(clamp((progress - range.in[0]) / (range.in[1] - range.in[0]), 0, 1));
+        yOffset = 40 * (1 - fadeInT);
+      }
 
       el.style.opacity = opacity;
       el.style.transform = `translateY(${yOffset}px)`;
@@ -350,36 +364,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     principleEls.forEach((el, i) => {
       const start = i * segment;
+      const end = start + segment;
+      const midpoint = start + segment * 0.5;
       const localT = clamp((progress - start) / segment, 0, 1);
-
-      // Smooth ease
-      const eased = localT < 0.5
-        ? 2 * localT * localT
-        : 1 - 2 * (1 - localT) * (1 - localT);
 
       const watermark = el.querySelector('.principle__watermark');
       const content = el.querySelector('.principle__content');
 
-      // Watermark slides from left
-      if (watermark) {
-        const xOff = -100 * (1 - eased);
-        watermark.style.transform = `translateX(${xOff}px)`;
-        watermark.style.opacity = clamp(eased, 0, 0.15);
-      }
+      // Past midpoint of this principle's range: snap to fully visible
+      const isPastMid = progress > midpoint && progress < end;
 
-      // Content slides from right
-      if (content) {
-        const xOff = 50 * (1 - eased);
-        content.style.transform = `translateX(${xOff}px)`;
-        content.style.opacity = eased;
+      if (isPastMid) {
+        if (watermark) {
+          watermark.style.transform = 'translateX(0)';
+          watermark.style.opacity = 0.15;
+        }
+        if (content) {
+          content.style.transform = 'translateX(0)';
+          content.style.opacity = 1;
+        }
+      } else {
+        // Smooth ease
+        const eased = localT < 0.5
+          ? 2 * localT * localT
+          : 1 - 2 * (1 - localT) * (1 - localT);
+
+        if (watermark) {
+          const xOff = -100 * (1 - eased);
+          watermark.style.transform = `translateX(${xOff}px)`;
+          watermark.style.opacity = clamp(eased, 0, 0.15);
+        }
+
+        if (content) {
+          const xOff = 50 * (1 - eased);
+          content.style.transform = `translateX(${xOff}px)`;
+          content.style.opacity = eased;
+        }
       }
 
       // Fade out previous principle when next one starts
       if (i < count - 1) {
         const nextStart = (i + 1) * segment;
         const fadeOutT = clamp((progress - nextStart) / (segment * 0.3), 0, 1);
-        if (fadeOutT > 0) {
+        if (fadeOutT > 0 && !isPastMid) {
           const overallOpacity = 1 - fadeOutT;
+          const eased = localT < 0.5
+            ? 2 * localT * localT
+            : 1 - 2 * (1 - localT) * (1 - localT);
           if (watermark) watermark.style.opacity = clamp(eased, 0, 0.15) * overallOpacity;
           if (content) content.style.opacity = eased * overallOpacity;
         }
@@ -405,11 +436,17 @@ document.addEventListener('DOMContentLoaded', () => {
       archEl.style.setProperty('--arch-hue', progress * 90 + 'deg');
     }
 
-    // Text swaps
+    // Text swaps — snap to visible when past midpoint
     archTexts.forEach((el, i) => {
       const range = archRanges[i];
       if (!range) return;
-      el.style.opacity = envelope(progress, range.in[0], range.in[1], range.out[0], range.out[1]);
+
+      const midpoint = (range.in[0] + range.out[1]) / 2;
+      if (progress > midpoint && progress < range.out[1]) {
+        el.style.opacity = 1;
+      } else {
+        el.style.opacity = envelope(progress, range.in[0], range.in[1], range.out[0], range.out[1]);
+      }
     });
   }
 
@@ -433,14 +470,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Global text color based on bg brightness
     const textColor = lerpColor(returnTextColors, progress);
 
-    // Text fades — strictly one at a time, no overlap
+    // Text fades — strictly one at a time, snap to visible past midpoint
     returnTexts.forEach((el, i) => {
       const range = returnRanges[i];
       if (!range) return;
 
-      const opacity = envelope(progress, range.in[0], range.in[1], range.out[0], range.out[1]);
-      const fadeInT = easeInOut(clamp((progress - range.in[0]) / (range.in[1] - range.in[0]), 0, 1));
-      const yOffset = 30 * (1 - fadeInT);
+      const midpoint = (range.in[0] + range.out[1]) / 2;
+      let opacity, yOffset;
+
+      if (progress > midpoint && progress < range.out[1]) {
+        opacity = 1;
+        yOffset = 0;
+      } else {
+        opacity = envelope(progress, range.in[0], range.in[1], range.out[0], range.out[1]);
+        const fadeInT = easeInOut(clamp((progress - range.in[0]) / (range.in[1] - range.in[0]), 0, 1));
+        yOffset = 30 * (1 - fadeInT);
+      }
 
       el.style.opacity = opacity;
       el.style.transform = `translateY(${yOffset}px)`;
@@ -456,6 +501,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Invert progress: gradient starts expanded (1) and collapses to a dot (0)
     const inverted = 1 - progress;
     reverseVoidSection.style.setProperty('--reverse-void-progress', inverted);
+  }
+
+  /* ---------------------------------------------------
+     SNAP-TO-DONE — force elements to final state
+     when section is past 50% viewport entry
+     --------------------------------------------------- */
+  const sectionAnimatedSelectors = {
+    void: ['.void__title', '.void__subtitle'],
+    descent: ['.descent__text'],
+    orb: ['.orb-section__content'],
+    orbit: ['.orbit__card'],
+    principles: ['.principle__watermark', '.principle__content'],
+    arch: ['.arch__text'],
+    return: ['.return__text']
+  };
+
+  // Track which sections have been snapped to done
+  const snappedSections = new Set();
+
+  function snapSectionToDone(sectionId, sectionEl) {
+    const selectors = sectionAnimatedSelectors[sectionId];
+    if (!selectors) return;
+    selectors.forEach(sel => {
+      sectionEl.querySelectorAll(sel).forEach(el => {
+        el.classList.add('snap-done');
+      });
+    });
+    snappedSections.add(sectionId);
+  }
+
+  function unSnapSection(sectionId, sectionEl) {
+    const selectors = sectionAnimatedSelectors[sectionId];
+    if (!selectors) return;
+    selectors.forEach(sel => {
+      sectionEl.querySelectorAll(sel).forEach(el => {
+        el.classList.remove('snap-done');
+      });
+    });
+    snappedSections.delete(sectionId);
   }
 
   /* ---------------------------------------------------
@@ -481,12 +565,37 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.classList.toggle('nav--scrolled', cachedScrollY > 60);
     }
 
-    // Per-section updates
+    // Per-section updates with snap-to-done logic
     sectionData.forEach(section => {
       if (!section.near) return;
       const progress = getProgress(section);
-      const fn = updateFns[section.id];
-      if (fn) fn(progress);
+
+      // Check viewport entry: section top relative to viewport
+      const sectionTopInView = section.top - cachedScrollY;
+      const entryProgress = 1 - (sectionTopInView / vh);
+
+      // When section is past 50% into viewport, snap animated children to done
+      // For multi-screen sections, use scroll progress instead
+      const snapThreshold = section.height > vh * 2 ? 0.5 : (entryProgress > 0.5);
+
+      if (section.height > vh * 2) {
+        // Multi-screen scrolling sections: use progress-based snapping
+        // Snap sub-elements based on their individual progress within the section
+        if (snappedSections.has(section.id)) {
+          unSnapSection(section.id, section.el);
+        }
+        const fn = updateFns[section.id];
+        if (fn) fn(progress);
+      } else {
+        // Single-screen sections: snap to done when >50% in view
+        if (entryProgress > 0.5 && !snappedSections.has(section.id)) {
+          snapSectionToDone(section.id, section.el);
+        } else if (entryProgress <= 0.3 && snappedSections.has(section.id)) {
+          unSnapSection(section.id, section.el);
+        }
+        const fn = updateFns[section.id];
+        if (fn) fn(progress);
+      }
     });
   }
 
