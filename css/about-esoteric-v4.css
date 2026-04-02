@@ -643,7 +643,8 @@ img { display: block; max-width: 100%; }
   --reverse-void-progress: 1;
   position: relative;
   min-height: 150vh;
-  background: radial-gradient(circle at 50% 50%,
+  background-color: #2E1A6B;
+  background-image: radial-gradient(circle at 50% 50%,
     #FFFBE6 calc(var(--reverse-void-progress) * 5%),
     #FFD700 calc(var(--reverse-void-progress) * 15%),
     #FF85A2 calc(var(--reverse-void-progress) * 25%),
@@ -653,6 +654,30 @@ img { display: block; max-width: 100%; }
     #000 calc(0.4% + var(--reverse-void-progress) * 99.6%)
   );
   will-change: background;
+}
+
+.reverse-void::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30vh;
+  background: linear-gradient(to top, transparent, #2E1A6B);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.reverse-void::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30vh;
+  background: linear-gradient(to bottom, transparent, #000000);
+  z-index: 2;
+  pointer-events: none;
 }
 
 
