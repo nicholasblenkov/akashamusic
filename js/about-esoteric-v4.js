@@ -95,7 +95,7 @@
         const content = section.querySelector('.void__content');
 
         if (title) title.style.opacity = progress > 0.3 ? '1' : '0';
-        if (subtitle) subtitle.style.opacity = progress > 0.5 ? '0.6' : '0';
+        if (subtitle) subtitle.style.opacity = progress > 0.5 ? '1' : '0';
 
         // Hide content when scrolled past void
         if (content) {

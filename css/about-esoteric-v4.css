@@ -136,6 +136,7 @@ img { display: block; max-width: 100%; }
   line-height: 1.05;
   color: var(--white);
   opacity: 0;
+  transition: opacity 150ms ease-out;
 }
 
 .void__subtitle {
@@ -145,6 +146,7 @@ img { display: block; max-width: 100%; }
   margin-top: 1.25rem;
   color: var(--white);
   opacity: 0;
+  transition: opacity 150ms ease-out;
 }
 
 
@@ -176,7 +178,7 @@ img { display: block; max-width: 100%; }
   max-width: 800px;
   padding: 0 2rem;
   opacity: 0;
-  transition: opacity 300ms ease-out;
+  transition: opacity 150ms ease-out;
 }
 
 .descent__text--hero {
@@ -192,7 +194,7 @@ img { display: block; max-width: 100%; }
 .descent__text--body {
   font-size: clamp(1rem, 1.5vw, 1.15rem);
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--white);
 }
 
 .descent__text--mid {
@@ -253,6 +255,7 @@ img { display: block; max-width: 100%; }
   max-width: 750px;
   padding: 0 2rem;
   opacity: 0;
+  transition: opacity 150ms ease-out;
 }
 
 .orb-section__label {
@@ -382,7 +385,7 @@ img { display: block; max-width: 100%; }
 .orbit__desc {
   font-size: 0.8rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--white);
 }
 
 
@@ -427,7 +430,7 @@ img { display: block; max-width: 100%; }
   width: 85%;
   padding: 0 2rem;
   opacity: 0;
-  transition: opacity 300ms ease-out;
+  transition: opacity 150ms ease-out;
 }
 
 .principle__watermark {
@@ -459,7 +462,7 @@ img { display: block; max-width: 100%; }
 .principle__desc {
   font-size: 0.95rem;
   line-height: 1.7;
-  color: #333;
+  color: #1A1A1A;
 }
 
 
@@ -525,11 +528,11 @@ img { display: block; max-width: 100%; }
   opacity: 0;
   width: 90%;
   max-width: 90%;
-  transition: opacity 300ms ease-out;
+  transition: opacity 150ms ease-out;
 }
 
 .arch__text--warm {
-  color: var(--warm-grey);
+  color: #FFFFFF;
 }
 
 .arch__text--largest {
@@ -572,7 +575,7 @@ img { display: block; max-width: 100%; }
   font-size: 1.15rem;
   line-height: 1.7;
   opacity: 0;
-  transition: opacity 300ms ease-out;
+  transition: opacity 150ms ease-out;
 }
 
 .return__text--bold {
@@ -791,7 +794,7 @@ img { display: block; max-width: 100%; }
 
   .descent__text--hero,
   .descent__text--mid { color: var(--white); }
-  .descent__text--body { color: rgba(255, 255, 255, 0.95); }
+  .descent__text--body { color: var(--white); }
 
   .descent { background: #2B4B8C; }
   .return-section { background: #8a8878; }
