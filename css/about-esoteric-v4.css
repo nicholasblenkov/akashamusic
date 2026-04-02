@@ -156,6 +156,7 @@ img { display: block; max-width: 100%; }
 .descent {
   position: relative;
   min-height: 500vh;
+  background-color: #000000;
 }
 
 .descent__sticky {
@@ -431,17 +432,10 @@ img { display: block; max-width: 100%; }
   gap: 2rem;
   max-width: 700px;
   width: 75%;
-  padding: 2.5rem 3rem;
   z-index: 2;
   opacity: 0;
   transition: opacity 150ms ease-out, transform 150ms ease-out;
-  border-radius: 16px;
 }
-
-/* Unique background per principle */
-.principle[data-index="0"] { background: #F5F0EB; }
-.principle[data-index="1"] { background: #EDE7E0; }
-.principle[data-index="2"] { background: #E5DDD5; }
 
 /* Positioning variants from about.html */
 .principle--left {
