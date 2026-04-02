@@ -266,6 +266,16 @@ button {
   text-align: right;
 }
 
+/* Artist description */
+.artist__desc {
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  opacity: 0.7;
+  margin-top: 0.75rem;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
 /* READ MORE links */
 .artist__link {
   font-size: 0.7rem;
