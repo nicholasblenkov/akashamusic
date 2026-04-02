@@ -295,7 +295,9 @@ img { display: block; max-width: 100%; }
 .listen__inner {
   max-width: var(--max-w);
   margin: 0 auto;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .listen__label {
@@ -307,11 +309,19 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   color: var(--red);
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .listen__embed {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   max-width: 500px;
-  margin: 0 auto;
+}
+
+.listen__embed iframe {
+  max-width: 500px;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
