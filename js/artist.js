@@ -87,6 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function goTo(index) {
       if (index < 0) index = slides.length - 1;
       if (index >= slides.length) index = 0;
+      const currentIframe = slides[current].querySelector('iframe');
+      if (currentIframe) {
+        currentIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      }
       slides[current].classList.remove('carousel__slide--active');
       dots[current].classList.remove('carousel__dot--active');
       current = index;
