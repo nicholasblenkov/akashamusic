@@ -357,6 +357,12 @@ img { display: block; max-width: 100%; }
   gap: 1.5rem;
 }
 
+.discography__grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
 .release__link {
   display: block;
   transition: opacity 0.3s;
