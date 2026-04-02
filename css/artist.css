@@ -471,6 +471,7 @@ img { display: block; max-width: 100%; }
 /* --- Featured Videos variant --- */
 .featured--videos {
   height: auto;
+  display: block;
   background: var(--black);
   padding: 4rem var(--page-pad) 5rem;
 }
