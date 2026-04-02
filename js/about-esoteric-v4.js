@@ -195,7 +195,6 @@
           const showEnd = ((i + 1) / count) * 0.9;
           const isActive = progress >= showStart && progress < showEnd;
           el.style.opacity = isActive ? '1' : '0';
-          el.style.transform = isActive ? 'translateX(0)' : 'translateX(-50px)';
         });
       }
 
