@@ -186,7 +186,7 @@
         }
       }
 
-      // ----- S5: PRINCIPLES (one at a time, spaced out) -----
+      // ----- S5: PRINCIPLES (one at a time, slide in from position) -----
       if (type === 'principles') {
         const principles = section.querySelectorAll('.principle');
         const count = principles.length;
@@ -194,7 +194,11 @@
           const showStart = (i / count) * 0.9;
           const showEnd = ((i + 1) / count) * 0.9;
           const isActive = progress >= showStart && progress < showEnd;
-          el.style.opacity = isActive ? '1' : '0';
+          if (isActive) {
+            el.classList.add('is-active');
+          } else {
+            el.classList.remove('is-active');
+          }
         });
       }
 
