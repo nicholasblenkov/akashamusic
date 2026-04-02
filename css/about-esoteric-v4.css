@@ -1,6 +1,6 @@
 /* ===================================================
    AKASHA MUSIC — Esoteric About Page (V4)
-   Cosmic scroll journey — optimized scroll performance
+   Cosmic scroll journey — no text overlap, instant show/hide
    =================================================== */
 
 *, *::before, *::after {
@@ -136,7 +136,6 @@ img { display: block; max-width: 100%; }
   line-height: 1.05;
   color: var(--white);
   opacity: 0;
-  will-change: opacity;
 }
 
 .void__subtitle {
@@ -146,18 +145,15 @@ img { display: block; max-width: 100%; }
   margin-top: 1.25rem;
   color: var(--white);
   opacity: 0;
-  will-change: opacity;
 }
 
 
 /* ===================================================
-   S2 — THE DESCENT
+   S2 — THE DESCENT (4 items → 500vh)
    =================================================== */
 .descent {
   position: relative;
-  min-height: 300vh;
-  will-change: background-color;
-  contain: layout style;
+  min-height: 500vh;
 }
 
 .descent__sticky {
@@ -167,17 +163,19 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .descent__text {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
+  width: 80%;
   max-width: 800px;
   padding: 0 2rem;
   opacity: 0;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .descent__text--hero {
@@ -253,6 +251,7 @@ img { display: block; max-width: 100%; }
   text-align: center;
   max-width: 750px;
   padding: 0 2rem;
+  opacity: 0;
 }
 
 .orb-section__label {
@@ -339,7 +338,6 @@ img { display: block; max-width: 100%; }
   padding: 2rem 1.75rem;
   opacity: 0;
   will-change: transform, opacity, filter;
-  transition: filter 0.3s ease-out;
 }
 
 /* Rainbow color sphere behind each card */
@@ -427,24 +425,23 @@ img { display: block; max-width: 100%; }
   max-width: 700px;
   width: 85%;
   padding: 0 2rem;
+  opacity: 0;
 }
 
 .principle__watermark {
   font-family: var(--font-display);
   font-size: clamp(80px, 12vw, 150px);
   color: #C4324A;
-  opacity: 0;
+  opacity: 0.15;
   line-height: 0.85;
   letter-spacing: -0.05em;
   flex-shrink: 0;
-  will-change: transform, opacity;
   user-select: none;
   margin-right: clamp(1rem, 3vw, 2.5rem);
 }
 
 .principle__content {
-  opacity: 0;
-  will-change: transform, opacity;
+  opacity: 1;
 }
 
 .principle__title {
@@ -465,11 +462,11 @@ img { display: block; max-width: 100%; }
 
 
 /* ===================================================
-   S6 — THE ARCH / PHILOSOPHY
+   S6 — THE ARCH / PHILOSOPHY (5 items → 600vh)
    =================================================== */
 .arch-section {
   position: relative;
-  min-height: 250vh;
+  min-height: 600vh;
   background: #1A1A4E;
 }
 
@@ -512,6 +509,9 @@ img { display: block; max-width: 100%; }
 
 .arch__text {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
   padding: 2.5rem;
   font-family: var(--font-display);
@@ -521,10 +521,8 @@ img { display: block; max-width: 100%; }
   letter-spacing: -0.01em;
   color: #FFFFFF;
   opacity: 0;
+  width: 90%;
   max-width: 90%;
-  will-change: opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .arch__text--warm {
@@ -542,13 +540,11 @@ img { display: block; max-width: 100%; }
 
 
 /* ===================================================
-   S7 — RETURN TO EARTH
+   S7 — RETURN TO EARTH (3 items → 400vh)
    =================================================== */
 .return-section {
   position: relative;
-  min-height: 150vh;
-  will-change: background-color;
-  contain: layout style;
+  min-height: 400vh;
 }
 
 .return-section__sticky {
@@ -558,19 +554,21 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .return__text {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
+  width: 80%;
   max-width: 700px;
   padding: 0 2rem;
   font-size: 1.15rem;
   line-height: 1.7;
   opacity: 0;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .return__text--bold {
@@ -583,43 +581,6 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 1.25;
-}
-
-
-/* ===================================================
-   SCROLL SNAP — section brakes
-   =================================================== */
-html {
-  scroll-snap-type: y proximity;
-}
-
-.snap-section {
-  scroll-snap-align: start;
-}
-
-.article-bottom,
-.reverse-void {
-  scroll-snap-align: start;
-}
-
-/* ===================================================
-   FAST TRANSITIONS — elements resolve within 200ms
-   =================================================== */
-.descent__text,
-.orb-section__content,
-.orbit__card,
-.principle__watermark,
-.principle__content,
-.arch__text,
-.return__text {
-  transition: opacity 200ms ease-out, transform 200ms ease-out, filter 200ms ease-out, color 200ms ease-out;
-}
-
-/* Snapped-to-done state: JS adds this class */
-.snap-done {
-  opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
 }
 
 
@@ -819,6 +780,9 @@ html {
     opacity: 1;
     transform: none;
     margin-bottom: 3rem;
+    top: auto;
+    left: auto;
+    width: 100%;
   }
 
   .descent__text--hero,
@@ -857,17 +821,8 @@ html {
 
   .principle {
     position: relative;
-    margin-bottom: 2rem;
-  }
-
-  .principle__watermark {
-    opacity: 0.15;
-    transform: none;
-  }
-
-  .principle__content {
     opacity: 1;
-    transform: none;
+    margin-bottom: 2rem;
   }
 
   .arch {
@@ -878,6 +833,10 @@ html {
     position: relative;
     opacity: 1;
     margin-bottom: 2rem;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
   }
 
   .arch::before {
