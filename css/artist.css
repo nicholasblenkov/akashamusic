@@ -468,6 +468,7 @@ img { display: block; max-width: 100%; }
 }
 
 .featured__videos-inner {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -479,12 +480,14 @@ img { display: block; max-width: 100%; }
 /* --- Carousel --- */
 .carousel {
   position: relative;
+  width: 100%;
 }
 
 .carousel__viewport {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
+  height: 0;
   overflow: hidden;
   border-radius: 8px;
 }
@@ -517,7 +520,7 @@ img { display: block; max-width: 100%; }
 .carousel__arrow {
   position: absolute;
   top: 50%;
-  transform: translateY(calc(-50% - 20px));
+  transform: translateY(-50%);
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -540,11 +543,11 @@ img { display: block; max-width: 100%; }
 }
 
 .carousel__arrow--prev {
-  left: -22px;
+  left: 12px;
 }
 
 .carousel__arrow--next {
-  right: -22px;
+  right: 12px;
 }
 
 .carousel__dots {
