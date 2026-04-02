@@ -75,4 +75,42 @@ document.addEventListener('DOMContentLoaded', () => {
     counters.forEach(counter => observer.observe(counter));
   }
 
+  // --- Video Carousel ---
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    const slides = carousel.querySelectorAll('.carousel__slide');
+    const dots = carousel.querySelectorAll('.carousel__dot');
+    const prevBtn = carousel.querySelector('.carousel__arrow--prev');
+    const nextBtn = carousel.querySelector('.carousel__arrow--next');
+    const viewport = carousel.querySelector('.carousel__viewport');
+    let current = 0;
+
+    function goTo(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      slides[current].classList.remove('carousel__slide--active');
+      dots[current].classList.remove('carousel__dot--active');
+      current = index;
+      slides[current].classList.add('carousel__slide--active');
+      dots[current].classList.add('carousel__dot--active');
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+    // Touch swipe support
+    let touchStartX = 0;
+
+    viewport.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        goTo(diff > 0 ? current + 1 : current - 1);
+      }
+    }, { passive: true });
+  });
+
 });

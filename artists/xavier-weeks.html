@@ -193,15 +193,30 @@
     <section class="featured featured--videos" aria-label="Featured videos">
       <div class="featured__videos-inner">
         <span class="section-label section-label--light section-label--center">Featured</span>
-        <div class="featured__video-main">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/yZbDKHm250s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="featured__video-row">
-          <div class="featured__video-half">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/mxvYaYWeijo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="carousel" aria-label="Video carousel">
+          <div class="carousel__viewport">
+            <div class="carousel__slide carousel__slide--active">
+              <div class="carousel__aspect">
+                <iframe src="https://www.youtube.com/embed/yZbDKHm250s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+            <div class="carousel__slide">
+              <div class="carousel__aspect">
+                <iframe src="https://www.youtube.com/embed/mxvYaYWeijo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+            <div class="carousel__slide">
+              <div class="carousel__aspect">
+                <iframe src="https://www.youtube.com/embed/mwvUjqDWvcU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
           </div>
-          <div class="featured__video-half">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/mwvUjqDWvcU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <button class="carousel__arrow carousel__arrow--prev" aria-label="Previous video">&lsaquo;</button>
+          <button class="carousel__arrow carousel__arrow--next" aria-label="Next video">&rsaquo;</button>
+          <div class="carousel__dots" aria-label="Video navigation">
+            <button class="carousel__dot carousel__dot--active" aria-label="Video 1"></button>
+            <button class="carousel__dot" aria-label="Video 2"></button>
+            <button class="carousel__dot" aria-label="Video 3"></button>
           </div>
         </div>
       </div>

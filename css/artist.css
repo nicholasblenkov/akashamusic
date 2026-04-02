@@ -468,7 +468,7 @@ img { display: block; max-width: 100%; }
 }
 
 .featured__videos-inner {
-  max-width: var(--max-w);
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -476,46 +476,105 @@ img { display: block; max-width: 100%; }
   margin-bottom: 2rem;
 }
 
-.featured__video-main {
+/* --- Carousel --- */
+.carousel {
+  position: relative;
+}
+
+.carousel__viewport {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
-  margin-bottom: 1.5rem;
-}
-
-.featured__video-main iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  overflow: hidden;
   border-radius: 8px;
 }
 
-.featured__video-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.featured__video-half {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-}
-
-.featured__video-half iframe {
+.carousel__slide {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+.carousel__slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carousel__aspect {
+  position: absolute;
+  inset: 0;
+}
+
+.carousel__aspect iframe {
   width: 100%;
   height: 100%;
+  border: 0;
   border-radius: 8px;
+}
+
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 20px));
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--white);
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.2s, border-color 0.2s;
+  z-index: 3;
+}
+
+.carousel__arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel__arrow--prev {
+  left: -22px;
+}
+
+.carousel__arrow--next {
+  right: -22px;
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.carousel__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.carousel__dot--active {
+  background: var(--white);
+  border-color: var(--white);
 }
 
 @media (max-width: 768px) {
-  .featured__video-row {
-    grid-template-columns: 1fr;
+  .carousel__arrow--prev {
+    left: 8px;
+  }
+  .carousel__arrow--next {
+    right: 8px;
   }
 }
 
