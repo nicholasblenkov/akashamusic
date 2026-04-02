@@ -247,10 +247,10 @@ img { display: block; max-width: 100%; }
 }
 
 .biography__inner {
-  max-width: var(--max-w);
+  max-width: 780px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 180px 1fr;
   gap: 2rem;
 }
 
