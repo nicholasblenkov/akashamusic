@@ -102,7 +102,7 @@ img { display: block; max-width: 100%; }
   --void-progress: 0;
   position: relative;
   min-height: 200vh;
-  background: radial-gradient(circle at 50% 50%,
+  background: radial-gradient(circle at 50% 40%,
     #FFFBE6 calc(var(--void-progress) * 5%),
     #FFD700 calc(var(--void-progress) * 15%),
     #FF85A2 calc(var(--void-progress) * 25%),
@@ -115,6 +115,18 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   will-change: background;
+}
+
+.void::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30vh;
+  background: linear-gradient(to bottom, transparent, #000000);
+  z-index: 2;
+  pointer-events: none;
 }
 
 
