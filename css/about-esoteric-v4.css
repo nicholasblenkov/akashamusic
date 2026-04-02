@@ -176,6 +176,7 @@ img { display: block; max-width: 100%; }
   max-width: 800px;
   padding: 0 2rem;
   opacity: 0;
+  transition: opacity 300ms ease-out;
 }
 
 .descent__text--hero {
@@ -426,6 +427,7 @@ img { display: block; max-width: 100%; }
   width: 85%;
   padding: 0 2rem;
   opacity: 0;
+  transition: opacity 300ms ease-out;
 }
 
 .principle__watermark {
@@ -523,6 +525,7 @@ img { display: block; max-width: 100%; }
   opacity: 0;
   width: 90%;
   max-width: 90%;
+  transition: opacity 300ms ease-out;
 }
 
 .arch__text--warm {
@@ -569,6 +572,7 @@ img { display: block; max-width: 100%; }
   font-size: 1.15rem;
   line-height: 1.7;
   opacity: 0;
+  transition: opacity 300ms ease-out;
 }
 
 .return__text--bold {

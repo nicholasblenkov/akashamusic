@@ -63,8 +63,12 @@
   ];
 
   const returnColors = [
-    [26, 26, 46],    // #1A1A2E
-    [245, 240, 235]  // #F5F0EB
+    [245, 240, 235], // #F5F0EB (cream — start light)
+    [255, 218, 185], // #FFDAB9
+    [255, 182, 193], // #FFB6C1
+    [135, 206, 235], // #87CEEB
+    [65, 105, 225],  // #4169E1
+    [46, 26, 107]    // #2E1A6B (deep indigo — end dark)
   ];
 
   /* ---------------------------------------------------
@@ -218,8 +222,8 @@
         const bg = lerpColorArray(returnColors, progress);
         section.style.backgroundColor = `rgb(${bg[0]},${bg[1]},${bg[2]})`;
 
-        // Text color based on background brightness
-        const textColor = progress > 0.4 ? '#1A1A1A' : '#FFFFFF';
+        // Text color: dark on light bg, white on dark bg (switches as bg darkens)
+        const textColor = progress > 0.45 ? '#FFFFFF' : '#1A1A1A';
 
         const texts = section.querySelectorAll('[data-index]');
         const stepSize = 1 / (texts.length + 1);
