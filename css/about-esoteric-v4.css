@@ -16,7 +16,7 @@
   --white: #ffffff;
   --warm-grey: #a09890;
   --font-display: 'Special Gothic Expanded One', 'Arial Black', 'Impact', sans-serif;
-  --font-body: 'Helvetica Neue', 'Arial', sans-serif;
+  --font-body: 'Area Normal Black', 'Helvetica Neue', 'Arial', sans-serif;
   --page-pad: 3rem;
 }
 
@@ -436,8 +436,8 @@ img { display: block; max-width: 100%; }
 .principle__watermark {
   font-family: var(--font-display);
   font-size: clamp(80px, 12vw, 150px);
-  color: #C4324A;
-  opacity: 0.15;
+  color: #8B1A2B;
+  opacity: 1;
   line-height: 0.85;
   letter-spacing: -0.05em;
   flex-shrink: 0;

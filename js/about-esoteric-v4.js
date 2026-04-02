@@ -186,16 +186,16 @@
         }
       }
 
-      // ----- S5: PRINCIPLES (one at a time) -----
+      // ----- S5: PRINCIPLES (one at a time, spaced out) -----
       if (type === 'principles') {
         const principles = section.querySelectorAll('.principle');
-        const stepSize = 1 / (principles.length + 1);
+        const count = principles.length;
         principles.forEach((el, i) => {
-          const showStart = stepSize * (i + 0.5);
-          const showEnd = stepSize * (i + 1.5);
-          const visible = progress >= showStart && progress < showEnd;
-          el.style.opacity = visible ? '1' : '0';
-          el.style.transform = visible ? 'translateX(0)' : 'translateX(-50px)';
+          const showStart = (i / count) * 0.9;
+          const showEnd = ((i + 1) / count) * 0.9;
+          const isActive = progress >= showStart && progress < showEnd;
+          el.style.opacity = isActive ? '1' : '0';
+          el.style.transform = isActive ? 'translateX(0)' : 'translateX(-50px)';
         });
       }
 
