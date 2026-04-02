@@ -284,6 +284,46 @@ img { display: block; max-width: 100%; }
 
 
 /* ===================================================
+   LISTEN (Spotify embed)
+   =================================================== */
+.listen {
+  background: var(--cream);
+  color: var(--black);
+  padding: 60px var(--page-pad) 60px;
+}
+
+.listen__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.listen__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 2rem;
+}
+
+.listen__embed {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .listen {
+    padding: 40px 20px;
+  }
+  .listen__embed {
+    max-width: 100%;
+  }
+}
+
+/* ===================================================
    DISCOGRAPHY
    =================================================== */
 .discography {
