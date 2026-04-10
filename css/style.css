@@ -1,0 +1,773 @@
+/* ===================================================
+   AKASHA MUSIC — Style
+   =================================================== */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --cream: #F5F0EB;
+  --red: #8B1A2B;
+  --white: #ffffff;
+  --grey: #999999;
+  --font-display: 'Special Gothic Expanded One', 'Arial Black', 'Impact', sans-serif;
+  --font-body: 'Area Normal Black', 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--white);
+  background: var(--black);
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* --- Scroll Container --- */
+.scroll-container {
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Section Base --- */
+.section {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+/* --- Video Background --- */
+.section__video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.section__video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.section__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Placeholder backgrounds until real videos are added */
+.section--hero .section__video-bg { background: #0d1a0d; }
+#xavier-weeks .section__video-bg { background: #1a2618; }
+#august-grau .section__video-bg { background: #2a1f14; }
+#lucus .section__video-bg { background: #0f1318; }
+#roverdatter .section__video-bg { background: #1a2010; }
+
+
+/* ===================================================
+   SECTION TOP BAR — Logo centered + Nav right
+   =================================================== */
+.section__top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 3rem 0;
+}
+
+.section__logo {
+  height: 72px;
+  width: auto;
+  display: block;
+}
+
+.section__nav {
+  position: absolute;
+  top: 2.5rem;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.section__nav a {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.section__nav a:hover {
+  opacity: 1;
+}
+
+.section__nav-pill {
+  opacity: 1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  padding: 0.45rem 1.25rem;
+  transition: background 0.3s, border-color 0.3s, opacity 0.3s;
+}
+
+.section__nav-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* ===================================================
+   HERO
+   =================================================== */
+.section--hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__tagline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.hero__scroll-hint {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2.5rem;
+}
+
+.hero__scroll-hint span {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: var(--white);
+  opacity: 0.4;
+  animation: pulse-line 2s ease-in-out infinite;
+}
+
+@keyframes pulse-line {
+  0%, 100% { opacity: 0.15; transform: scaleY(1); }
+  50% { opacity: 0.6; transform: scaleY(1.2); }
+}
+
+
+/* ===================================================
+   ARTIST SECTIONS
+   =================================================== */
+.section--artist {
+  display: flex;
+  align-items: stretch;
+}
+
+.artist__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+}
+
+.artist__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.artist__meta {
+  position: absolute;
+  top: 3rem;
+  left: 3rem;
+}
+
+.artist__meta--right {
+  left: auto;
+  right: 3rem;
+  text-align: right;
+}
+
+.artist__name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+/* Left-aligned artist name (Xavier Weeks, Lucus) */
+.artist__name--left {
+  font-size: clamp(3rem, 10vw, 9rem);
+  text-align: left;
+  align-self: flex-start;
+}
+
+/* Right-aligned artist name (August Grau) */
+.artist__name--right {
+  font-size: clamp(3rem, 10vw, 9rem);
+  text-align: right;
+  align-self: flex-end;
+}
+
+/* Bottom-right (Roverdatter) */
+.artist__content--bottom {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.artist__name--bottom-right {
+  font-size: clamp(3rem, 10vw, 9rem);
+  text-align: right;
+}
+
+/* Artist description */
+.artist__desc {
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  opacity: 0.7;
+  margin-top: 0.75rem;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* READ MORE links */
+.artist__link {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  margin-top: 1.5rem;
+}
+
+.artist__link:hover {
+  opacity: 1;
+}
+
+.artist__link--right {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+}
+
+.artist__link--left {
+  position: absolute;
+  bottom: 3rem;
+  left: 3rem;
+}
+
+.artist__link--bottom-left {
+  position: absolute;
+  bottom: 3rem;
+  left: 3rem;
+  align-self: flex-start;
+}
+
+
+/* ===================================================
+   SERVICES
+   =================================================== */
+.section--services {
+  background: var(--cream);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.services__inner {
+  width: 100%;
+  max-width: 800px;
+  padding: 3rem;
+}
+
+.services__logo {
+  display: block;
+  width: 80px;
+  height: auto;
+  margin: 0 auto 2rem;
+}
+
+.services__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.75rem;
+}
+
+.services__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+
+.services__list {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* --- Accordion --- */
+.accordion {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.accordion__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 0;
+  font-size: 1rem;
+  text-align: left;
+  transition: opacity 0.3s;
+}
+
+.accordion__trigger:hover {
+  opacity: 0.6;
+}
+
+.accordion__number {
+  font-size: 0.75rem;
+  opacity: 0.4;
+  min-width: 2.5rem;
+  letter-spacing: 0.05em;
+}
+
+.accordion__title {
+  flex: 1;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.accordion__icon {
+  font-size: 1.25rem;
+  font-weight: 300;
+  width: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.accordion.is-open .accordion__icon {
+  transform: rotate(45deg);
+}
+
+.accordion__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.accordion.is-open .accordion__body {
+  max-height: 200px;
+}
+
+.accordion__body p {
+  padding: 0 0 1.25rem 2.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.7;
+  max-width: 540px;
+}
+
+
+/* ===================================================
+   LATEST + FOOTER (merged single snap section)
+   =================================================== */
+.section--latest-footer {
+  background: var(--cream);
+  color: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.latest__inner {
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 3rem 5rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.latest__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.75rem;
+}
+
+.latest__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.latest__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.latest__card {
+  display: block;
+  transition: opacity 0.3s;
+}
+
+.latest__card:hover {
+  opacity: 0.7;
+}
+
+.latest__thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #c4b8aa;
+  margin-bottom: 0.75rem;
+}
+
+.latest__card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+.latest__card-desc {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  line-height: 1.5;
+}
+
+/* ===================================================
+   ARTICLE BOTTOM / FOOTER (shared across pages)
+   =================================================== */
+.article-bottom__inner {
+  padding: 3.5rem 3rem 2.5rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.article-bottom__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.article-bottom__talk {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  transition: opacity 0.3s;
+}
+
+.article-bottom__talk:hover { opacity: 0.6; }
+
+.article-bottom__artists {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.article-bottom__artists-col { flex: 1; }
+
+.article-bottom__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1rem;
+}
+
+.article-bottom__artist-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-bottom__artist-name {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition: opacity 0.3s;
+}
+
+.article-bottom__artist-name:hover { opacity: 0.5; }
+
+.article-bottom__cta-col {
+  display: flex;
+  align-items: flex-end;
+}
+
+.article-bottom__pill {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.article-bottom__pill:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile-only row: hidden on desktop */
+.article-bottom__mobile-row {
+  display: none;
+}
+
+/* --- Footer copyright --- */
+.footer {
+  padding: 1.5rem 3rem 2.5rem;
+  text-align: center;
+}
+
+.footer p {
+  font-size: 0.65rem;
+  opacity: 0.4;
+  letter-spacing: 0.1em;
+}
+
+/* --- Mobile-only line break (hidden by default) --- */
+.mobile-only {
+  display: none;
+}
+
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+@media (max-width: 768px) {
+  .section__top-bar {
+    padding: 1.5rem 1.5rem 0;
+  }
+
+  .section__nav {
+    top: 1.5rem;
+    right: 1.5rem;
+    gap: 1rem;
+  }
+
+  .section__nav a {
+    font-size: 0.65rem;
+  }
+
+  .section__logo {
+    height: 56px;
+  }
+
+  .artist__content {
+    padding: 2rem 1.5rem;
+  }
+
+  .artist__meta {
+    top: 2rem;
+    left: 1.5rem;
+  }
+
+  .artist__meta--right {
+    left: auto;
+    right: 1.5rem;
+  }
+
+  .artist__link--right {
+    bottom: 2rem;
+    right: 1.5rem;
+  }
+
+  .artist__link--left {
+    bottom: 2rem;
+    left: 1.5rem;
+  }
+
+  .artist__link--bottom-left {
+    bottom: 2rem;
+    left: 1.5rem;
+  }
+
+  .artist__name--left,
+  .artist__name--right,
+  .artist__name--bottom-right {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+  }
+
+  .services__inner {
+    padding: 2rem 1.5rem;
+  }
+
+  /* --- Latest: horizontal swipe on mobile --- */
+  .latest__inner {
+    padding: 3rem 1.5rem 2.5rem;
+  }
+
+  .latest__heading {
+    margin-bottom: 1rem;
+  }
+
+  .latest__grid {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .latest__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .latest__card {
+    flex: 0 0 75%;
+    scroll-snap-align: start;
+  }
+
+  /* --- Footer mobile layout --- */
+  .article-bottom__inner {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .article-bottom__top {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Hide desktop "Let's talk" and CTA pill on mobile */
+  .article-bottom__top .article-bottom__talk {
+    display: none;
+  }
+
+  .article-bottom__cta-col {
+    display: none;
+  }
+
+  .article-bottom__artist-name {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+  }
+
+  .article-bottom__artists {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  /* Show mobile bottom row: LET'S TALK far left, GET IN TOUCH far right */
+  .article-bottom__mobile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .article-bottom__mobile-row .article-bottom__talk {
+    display: block;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .article-bottom__mobile-row .article-bottom__pill {
+    font-size: 0.6rem;
+    padding: 0.4rem 1.2rem;
+  }
+
+  .footer {
+    padding: 1rem 1.5rem;
+  }
+
+  /* Show mobile-only line break */
+  .mobile-only {
+    display: inline;
+  }
+}
+
+@media (max-width: 480px) {
+  .section__nav {
+    display: none;
+  }
+
+  .hero__tagline {
+    font-size: clamp(1.6rem, 8vw, 2.5rem);
+    padding: 0 1rem;
+  }
+
+  .artist__name--left,
+  .artist__name--right,
+  .artist__name--bottom-right {
+    font-size: clamp(2rem, 14vw, 3.5rem);
+  }
+
+  .accordion__trigger {
+    font-size: 0.9rem;
+    padding: 1rem 0;
+  }
+
+  .latest__card {
+    flex: 0 0 80%;
+  }
+}

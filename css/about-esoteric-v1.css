@@ -1,0 +1,941 @@
+/* ===================================================
+   AKASHA MUSIC — Esoteric About Page (V1)
+   Cosmic scroll journey — pure CSS visual effects
+   =================================================== */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0a0a;
+  --cream: #F5F0EB;
+  --red: #8B1A2B;
+  --white: #ffffff;
+  --warm-grey: #a09890;
+  --font-display: 'Special Gothic Expanded One', 'Arial Black', 'Impact', sans-serif;
+  --font-body: 'Helvetica Neue', 'Arial', sans-serif;
+  --page-pad: 3rem;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--white);
+  background: #000;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+
+/* ===================================================
+   NAV
+   =================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.75rem var(--page-pad);
+  transition: background 0.4s, padding 0.4s;
+}
+
+.nav--scrolled {
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.nav__logo { display: flex; align-items: center; }
+.nav__logo-img { height: 28px; width: auto; }
+
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav__link {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.nav__link:hover,
+.nav__link--active { opacity: 1; }
+
+.nav__link--pill {
+  opacity: 1;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  padding: 0.45rem 1.25rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav__link--pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* ===================================================
+   S1 — THE VOID
+   =================================================== */
+.void {
+  --void-progress: 0;
+  position: relative;
+  min-height: 200vh;
+  background: radial-gradient(circle at 50% 50%,
+    #FFF5E0 calc(var(--void-progress) * 5%),
+    #E8C87A calc(var(--void-progress) * 15%),
+    #D4A0B0 calc(var(--void-progress) * 25%),
+    #9B6B9E calc(var(--void-progress) * 40%),
+    #3A5BA0 calc(var(--void-progress) * 60%),
+    #1A1A4E calc(var(--void-progress) * 80%),
+    #000 calc(0.4% + var(--void-progress) * 99.6%)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: background;
+}
+
+/* Bottom gradient blend for seamless transition into Descent */
+.void::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  background: linear-gradient(to bottom, transparent, #1A1A4E);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.void__darken {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1A1A4E;
+  opacity: var(--void-darken, 0);
+  pointer-events: none;
+  z-index: 1;
+  will-change: opacity;
+}
+
+.void__content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.void__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--white);
+  opacity: 0;
+  will-change: opacity;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.void__subtitle {
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin-top: 1.25rem;
+  color: var(--white);
+  opacity: 0;
+  will-change: opacity;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ===================================================
+   S2 — THE DESCENT
+   =================================================== */
+.descent {
+  position: relative;
+  min-height: 300vh;
+  will-change: background-color;
+}
+
+.descent__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Floating frosted pill backdrop for all descent text */
+.descent__text {
+  position: absolute;
+  text-align: center;
+  max-width: 800px;
+  padding: 1.75rem 2.5rem;
+  opacity: 0;
+  will-change: opacity, transform;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.descent__text--hero {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.descent__text--body {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.descent__text--mid {
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  line-height: 1.7;
+  color: var(--white);
+}
+
+
+/* ===================================================
+   S3 — THE ORB / MISSION
+   =================================================== */
+.orb-section {
+  position: relative;
+  min-height: 150vh;
+  background: var(--cream);
+}
+
+.orb-section__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.orb-track {
+  position: absolute;
+  will-change: transform;
+  z-index: 0;
+}
+
+.orb {
+  width: clamp(300px, 40vw, 500px);
+  height: clamp(300px, 40vw, 500px);
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(232, 200, 122, 0.4) 0%,
+    rgba(212, 160, 176, 0.3) 30%,
+    rgba(155, 107, 158, 0.2) 50%,
+    rgba(58, 91, 160, 0.1) 70%,
+    transparent 100%);
+  filter: blur(40px);
+  animation: orbPulse 4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.orb-section__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 750px;
+  padding: 0 2rem;
+}
+
+.orb-section__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 2rem;
+}
+
+.orb-section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  text-transform: uppercase;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #2A2A2A;
+}
+
+
+/* ===================================================
+   S4 — SERVICES / ORBITING ELEMENTS
+   =================================================== */
+.orbit-section {
+  position: relative;
+  min-height: 300vh;
+  background: #0A0A0A;
+}
+
+.orbit-section__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.orbit-section__header {
+  position: absolute;
+  top: 12%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 2;
+}
+
+.orbit-section__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.75rem;
+}
+
+.orbit-section__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.orbit {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+/* Glass card sits on top of the sphere */
+.orbit__card {
+  position: absolute;
+  width: clamp(220px, 22vw, 280px);
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 2rem 1.75rem;
+  opacity: 0;
+  z-index: 1;
+  will-change: transform, opacity, filter;
+  transition: filter 0.3s ease-out;
+}
+
+/* Color sphere behind each card */
+.orbit__card::before {
+  content: '';
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: -1;
+  opacity: var(--sphere-opacity, 0.2);
+  transform: scale(var(--sphere-scale, 0.8));
+  will-change: opacity, transform;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+/* Per-service sphere color palettes */
+.orbit__card[data-index="0"]::before {
+  background: radial-gradient(circle, #FFD700, #F0A500, #B8860B);
+}
+.orbit__card[data-index="1"]::before {
+  background: radial-gradient(circle, #FF69B4, #FF1493, #C71585);
+}
+.orbit__card[data-index="2"]::before {
+  background: radial-gradient(circle, #5BB8F5, #4169E1, #1E90FF);
+}
+.orbit__card[data-index="3"]::before {
+  background: radial-gradient(circle, #2ED573, #1ABC9C, #20B2AA);
+}
+.orbit__card[data-index="4"]::before {
+  background: radial-gradient(circle, #A569BD, #8E44AD, #7D3C98);
+}
+
+.orbit__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  color: var(--red);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.orbit__name {
+  font-family: var(--font-display);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  color: var(--white);
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.orbit__desc {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ===================================================
+   S5 — OUR PRINCIPLES
+   =================================================== */
+.principles-section {
+  position: relative;
+  min-height: 200vh;
+  background: var(--cream);
+}
+
+.principles-section__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.principles__label {
+  position: absolute;
+  top: 12%;
+  left: 0;
+  right: 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  text-align: center;
+  z-index: 2;
+}
+
+.principle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  max-width: 700px;
+  width: 85%;
+  padding: 0 2rem;
+}
+
+.principle__watermark {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 12vw, 150px);
+  color: var(--red);
+  opacity: 0;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  flex-shrink: 0;
+  will-change: transform, opacity;
+  user-select: none;
+  margin-right: clamp(1rem, 3vw, 2.5rem);
+}
+
+.principle__content {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.principle__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+  color: #2A2A2A;
+}
+
+.principle__desc {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #2A2A2A;
+  opacity: 0.7;
+}
+
+
+/* ===================================================
+   S6 — THE ARCH / PHILOSOPHY
+   =================================================== */
+.arch-section {
+  position: relative;
+  min-height: 250vh;
+  background: #1A1A2E;
+}
+
+.arch-section__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arch {
+  --arch-hue: 0deg;
+  --arch-glow: 0;
+  position: relative;
+  width: clamp(320px, 40vw, 500px);
+  height: clamp(450px, 55vw, 700px);
+  border-radius: clamp(160px, 20vw, 250px) clamp(160px, 20vw, 250px) 0 0;
+  background: #1A1A2E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  box-shadow: 0 0 calc(var(--arch-glow) * 60px) calc(var(--arch-glow) * 20px) rgba(232, 200, 122, 0.2);
+  will-change: box-shadow;
+}
+
+.arch::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(clamp(160px, 20vw, 250px) + 2px) calc(clamp(160px, 20vw, 250px) + 2px) 0 0;
+  background: linear-gradient(180deg, #E8C87A, #D4A0B0, #9B6B9E, #3A5BA0);
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(4px) hue-rotate(var(--arch-hue));
+  will-change: filter;
+}
+
+.arch__text {
+  position: absolute;
+  text-align: center;
+  padding: 2.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  text-transform: uppercase;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  opacity: 0;
+  max-width: 90%;
+  will-change: opacity;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.arch__text--warm {
+  color: var(--warm-grey);
+}
+
+.arch__text--largest {
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+}
+
+.arch__text--small {
+  font-size: clamp(0.95rem, 1.6vw, 1.3rem);
+}
+
+
+/* ===================================================
+   S7 — RETURN TO EARTH
+   =================================================== */
+.return-section {
+  position: relative;
+  min-height: 150vh;
+  will-change: background-color;
+}
+
+.return-section__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.return__text {
+  position: absolute;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 2rem;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  opacity: 0;
+  will-change: opacity, transform;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+.return__text--bold {
+  font-weight: 700;
+}
+
+.return__text--large {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+
+/* ===================================================
+   FOOTER
+   =================================================== */
+.article-bottom {
+  background: var(--cream);
+  color: #0a0a0a;
+}
+
+.article-bottom__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem var(--page-pad) 3rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.article-bottom__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.article-bottom__talk {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  transition: opacity 0.3s;
+}
+
+.article-bottom__talk:hover { opacity: 0.6; }
+
+.article-bottom__artists {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.article-bottom__artists-col { flex: 1; }
+
+.article-bottom__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1rem;
+}
+
+.article-bottom__artist-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-bottom__artist-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition: opacity 0.3s;
+  color: #0a0a0a;
+}
+
+.article-bottom__artist-name:hover { opacity: 0.5; }
+
+.article-bottom__cta-col {
+  display: flex;
+  align-items: flex-end;
+}
+
+.article-bottom__pill {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.3s, border-color 0.3s;
+  color: #0a0a0a;
+}
+
+.article-bottom__pill:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.6);
+}
+
+.footer {
+  padding: 2rem var(--page-pad);
+  text-align: center;
+  background: var(--cream);
+}
+
+.footer p {
+  font-size: 0.65rem;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+
+/* ===================================================
+   REDUCED MOTION
+   =================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .void {
+    --void-progress: 1;
+    background: #1A1A4E;
+  }
+
+  .void::after { display: none; }
+
+  .void__content {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+  }
+
+  .void__title,
+  .void__subtitle {
+    opacity: 1;
+  }
+
+  .void__darken { display: none; }
+
+  .orb { animation: none; opacity: 0.7; }
+
+  .descent__sticky,
+  .orb-section__sticky,
+  .orbit-section__sticky,
+  .principles-section__sticky,
+  .arch-section__sticky,
+  .return-section__sticky {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .descent__text,
+  .arch__text,
+  .return__text {
+    position: relative;
+    opacity: 1;
+    transform: none;
+    margin-bottom: 3rem;
+  }
+
+  .descent__text--hero,
+  .descent__text--mid { color: var(--white); }
+  .descent__text--body { color: rgba(255, 255, 255, 0.95); }
+
+  .descent { background: #2B4B8C; }
+  .return-section { background: #8a8878; }
+  .return__text { color: var(--white); }
+
+  .orbit__card {
+    position: relative;
+    opacity: 1;
+    filter: none;
+    transform: none;
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem auto;
+  }
+
+  .orbit__card::before {
+    display: none;
+  }
+
+  .orbit {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .principle {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .principle__watermark {
+    opacity: 0.15;
+    transform: none;
+  }
+
+  .principle__content {
+    opacity: 1;
+    transform: none;
+  }
+
+  .arch {
+    box-shadow: 0 0 30px 10px rgba(232, 200, 122, 0.2);
+  }
+
+  .arch__text {
+    position: relative;
+    opacity: 1;
+    margin-bottom: 2rem;
+  }
+
+  .arch::before {
+    filter: blur(4px);
+  }
+}
+
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+@media (max-width: 768px) {
+  :root { --page-pad: 1.5rem; }
+
+  .nav {
+    padding: 1.25rem var(--page-pad);
+  }
+
+  .nav--scrolled {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .nav__right { gap: 1rem; }
+  .nav__link { font-size: 0.6rem; }
+  .nav__link--pill { padding: 0.35rem 0.9rem; }
+
+  .orbit__card {
+    width: 80vw;
+    max-width: 340px;
+  }
+
+  .descent__text {
+    padding: 1.25rem 1.5rem;
+    max-width: 90vw;
+  }
+
+  .principle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .principle__watermark {
+    margin-right: 0;
+  }
+
+  .arch {
+    width: 90vw;
+    max-width: none;
+    height: calc(90vw * 1.4);
+    border-radius: 45vw 45vw 0 0;
+  }
+
+  .arch::before {
+    border-radius: calc(45vw + 2px) calc(45vw + 2px) 0 0;
+  }
+
+  .arch__text {
+    padding: 1.5rem;
+  }
+
+  .article-bottom__talk {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+  }
+
+  .article-bottom__artist-name {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+  }
+
+  .article-bottom__artists {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav__right { gap: 0.75rem; }
+
+  .nav__link:not(.nav__link--pill) {
+    display: none;
+  }
+
+  .void__title {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .descent__text--hero {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .arch__text {
+    font-size: clamp(1rem, 5vw, 1.4rem);
+  }
+
+  .arch__text--largest {
+    font-size: clamp(1.3rem, 6vw, 2rem);
+  }
+}

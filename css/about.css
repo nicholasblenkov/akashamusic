@@ -1,0 +1,978 @@
+/* ===================================================
+   AKASHA MUSIC — About Page (Scroll-Hijack)
+   =================================================== */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --cream: #F5F0EB;
+  --cream-warm: #EDE8E1;
+  --red: #8B1A2B;
+  --white: #ffffff;
+  --warm-grey: #a09890;
+  --grey: #999999;
+  --font-display: 'Special Gothic Expanded One', 'Arial Black', 'Impact', sans-serif;
+  --font-body: 'Area Normal Black', 'Helvetica Neue', 'Arial', sans-serif;
+  --page-pad: 3rem;
+  --ease: cubic-bezier(0.25, 0, 0.25, 1);
+  --step-dur: 0.3s;
+  --panel-dur: 0.4s;
+  --carousel-dur: 0.4s;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--white);
+  background: var(--black);
+  overflow: hidden;
+}
+
+body.hijack-done {
+  overflow-y: auto;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+
+/* ===================================================
+   PROGRESS BAR
+   =================================================== */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--red);
+  z-index: 200;
+  transition: width 0.3s ease-out;
+  will-change: width;
+}
+
+
+/* ===================================================
+   NAV (fixed, transparent → dark on scroll)
+   =================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.75rem var(--page-pad);
+  transition: background 0.4s, padding 0.4s;
+}
+
+.nav--scrolled {
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.nav__logo { display: flex; align-items: center; }
+.nav__logo-img { height: 28px; width: auto; }
+
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav__link {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.nav__link:hover,
+.nav__link--active { opacity: 1; }
+
+.nav__link--pill {
+  opacity: 1;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  padding: 0.45rem 1.25rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav__link--pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* ===================================================
+   SCROLL-HIJACK CONTAINER
+   =================================================== */
+.hijack {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+body.hijack-done .hijack {
+  display: none;
+}
+
+
+/* ===================================================
+   PANELS (stacked, one visible at a time)
+   =================================================== */
+.panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--panel-dur) var(--ease), visibility var(--panel-dur);
+  will-change: opacity;
+}
+
+.panel.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.panel--dark  { background: var(--black); color: var(--white); }
+.panel--cream { background: var(--cream); color: var(--black); }
+.panel--cream-warm { background: var(--cream-warm); color: var(--black); }
+
+
+/* --- Panel background video --- */
+.panel__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity var(--panel-dur) var(--ease);
+  will-change: opacity;
+}
+
+.panel.is-active .panel__bg {
+  opacity: 0.3;
+}
+
+.panel__bg--opening {
+  transition: opacity 0.6s var(--ease);
+}
+
+.panel.is-active .panel__bg--opening {
+  opacity: 0.4;
+}
+
+.panel__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.55);
+  z-index: 1;
+}
+
+.panel__bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(8px);
+  transform: scale(1.05);
+  will-change: transform;
+}
+
+.panel__center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--page-pad);
+  max-width: 900px;
+  width: 100%;
+}
+
+.panel__center--narrow {
+  max-width: 750px;
+}
+
+
+/* ===================================================
+   STEPS (sub-content reveals within panels)
+   =================================================== */
+.step {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--step-dur) var(--ease), transform var(--step-dur) var(--ease);
+  will-change: opacity, transform;
+}
+
+.step.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step--lg {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.step--sm {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  line-height: 1.8;
+  opacity: 0;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.step--sm.is-visible {
+  opacity: 0.5;
+}
+
+.step--bold {
+  font-weight: 700;
+}
+
+
+/* ===================================================
+   S1 — OPENING
+   =================================================== */
+.opening__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  opacity: 0;
+  animation: fadeInTitle 0.3s var(--ease) forwards;
+}
+
+@keyframes fadeInTitle {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.opening__sub {
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  opacity: 0.5;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin-top: 1.25rem;
+  min-height: 1.5em;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scroll-hint span {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: var(--white);
+  opacity: 0.4;
+  animation: pulse-line 2s ease-in-out infinite;
+}
+
+@keyframes pulse-line {
+  0%, 100% { opacity: 0.15; transform: scaleY(1); }
+  50% { opacity: 0.6; transform: scaleY(1.2); }
+}
+
+
+/* ===================================================
+   S3 — SNAP / STANDALONE STATEMENT
+   =================================================== */
+.snap__text {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+/* ===================================================
+   S4 — MISSION
+   =================================================== */
+.mission__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 2rem;
+}
+
+.mission__statement {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  text-transform: uppercase;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+
+/* ===================================================
+   S6 — SERVICES CAROUSEL (Cover Flow)
+   =================================================== */
+.panel--services {
+  background: #1c1a18;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.services__header {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 3;
+}
+
+.services__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.75rem;
+}
+
+.services__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  z-index: 2;
+}
+
+.carousel__card {
+  position: absolute;
+  width: 65vw;
+  max-width: 800px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateX(120%) scale(0.85);
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 3rem 3.5rem;
+  transition: transform var(--carousel-dur) ease-out, opacity var(--carousel-dur) ease-out;
+  will-change: transform, opacity;
+}
+
+.carousel__card.is-prev {
+  transform: translate(-50%, -50%) translateX(-100%) scale(0.9);
+  opacity: 0.3;
+}
+
+.carousel__card.is-active {
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 1;
+}
+
+.carousel__card.is-next {
+  transform: translate(-50%, -50%) translateX(100%) scale(0.9);
+  opacity: 0.3;
+}
+
+.carousel__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  color: var(--red);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.carousel__name {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.carousel__desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  opacity: 0.45;
+}
+
+.carousel__dots {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  z-index: 3;
+}
+
+.carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.carousel__dot.is-active {
+  background: var(--white);
+  transform: scale(1.3);
+}
+
+
+/* ===================================================
+   S7 — PRINCIPLES (Large Cards, Staggered)
+   =================================================== */
+.principles__label {
+  position: absolute;
+  top: 12%;
+  left: 0;
+  right: 0;
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  text-align: center;
+  z-index: 3;
+}
+
+.principle {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 700px;
+  width: 75%;
+  padding: 2.5rem 3rem;
+  z-index: 2;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.principle.step.principle--left {
+  left: 8%;
+  transform: translateY(-50%) translateX(-80px);
+  opacity: 0;
+}
+
+.principle.step.principle--left.is-visible {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+}
+
+.principle.step.principle--center {
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(50px);
+  opacity: 0;
+}
+
+.principle.step.principle--center.is-visible {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.principle.step.principle--right {
+  right: 8%;
+  transform: translateY(-50%) translateX(80px);
+  opacity: 0;
+}
+
+.principle.step.principle--right.is-visible {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+}
+
+.principle__num {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  color: var(--red);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+}
+
+.principle__content {
+  padding-top: 0.5rem;
+}
+
+.principle__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+
+.principle__desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.55;
+}
+
+
+/* ===================================================
+   S8 — PHILOSOPHY BILLBOARD (Cinematic)
+   =================================================== */
+.panel--philosophy {
+  background: #1a1a1a;
+  color: var(--white);
+  transition: background 0.6s ease, opacity var(--panel-dur) var(--ease), visibility var(--panel-dur);
+  overflow: hidden;
+}
+
+.panel--philosophy .billboard.step {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  max-width: 900px;
+  text-align: center;
+  transform: translate(-50%, -50%) translateY(30px);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.panel--philosophy .billboard.step.is-visible {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.billboard {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.billboard--xl {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+}
+
+.billboard--xxl {
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+}
+
+.billboard--lg {
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+}
+
+.billboard--md {
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.billboard--white { color: var(--white); }
+
+.billboard--warm {
+  color: var(--warm-grey);
+}
+
+.panel--philosophy .billboard--warm.step.is-visible {
+  opacity: 0.7;
+}
+
+.billboard--muted {
+  color: #5a5448;
+}
+
+.panel--philosophy .billboard--muted.step.is-visible {
+  opacity: 0.7;
+}
+
+.billboard--bold { font-weight: 700; }
+
+
+/* ===================================================
+   AFTER-HIJACK (normal scroll sections)
+   =================================================== */
+.after-hijack {
+  position: relative;
+  z-index: 0;
+  display: none;
+}
+
+body.hijack-done .after-hijack {
+  display: block;
+}
+
+
+/* ===================================================
+   S9 — THE CLOSE
+   =================================================== */
+.close {
+  background: var(--cream);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem var(--page-pad);
+}
+
+.close__inner {
+  max-width: 700px;
+  text-align: center;
+}
+
+.close__divider {
+  width: 60px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+  margin: 0 auto 3rem;
+}
+
+.close__text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+.close__text--bold {
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.close__text--large {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  opacity: 1;
+  margin-top: 2rem;
+}
+
+
+/* --- Fade-in for close section --- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  will-change: opacity, transform;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.close__text.fade-in.is-visible {
+  opacity: 0.6;
+}
+
+.close__text--bold.fade-in.is-visible {
+  opacity: 0.85;
+}
+
+.close__text--large.fade-in.is-visible {
+  opacity: 1;
+}
+
+
+/* ===================================================
+   S10 — ARTICLE BOTTOM / FOOTER (shared pattern)
+   =================================================== */
+.article-bottom {
+  background: var(--cream);
+  color: var(--black);
+}
+
+.article-bottom__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem var(--page-pad) 3rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.article-bottom__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.article-bottom__talk {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  transition: opacity 0.3s;
+}
+
+.article-bottom__talk:hover { opacity: 0.6; }
+
+.article-bottom__artists {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.article-bottom__artists-col { flex: 1; }
+
+.article-bottom__label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1rem;
+}
+
+.article-bottom__artist-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-bottom__artist-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition: opacity 0.3s;
+}
+
+.article-bottom__artist-name:hover { opacity: 0.5; }
+
+.article-bottom__cta-col {
+  display: flex;
+  align-items: flex-end;
+}
+
+.article-bottom__pill {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.article-bottom__pill:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.6);
+}
+
+.footer {
+  padding: 2rem var(--page-pad);
+  text-align: center;
+  background: var(--cream);
+  color: var(--black);
+}
+
+.footer p {
+  font-size: 0.65rem;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+
+/* ===================================================
+   ACCESSIBILITY — Reduced Motion
+   =================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .step,
+  .carousel__card,
+  .fade-in,
+  .principle,
+  .panel--philosophy,
+  .panel--philosophy .billboard.step {
+    transition: none;
+  }
+
+  .opening__title {
+    opacity: 1;
+    animation: none;
+  }
+
+  .scroll-hint span {
+    animation: none;
+    opacity: 0.4;
+  }
+
+  body.reduced-motion .hijack { display: none; }
+  body.reduced-motion .after-hijack { display: block; }
+  body.reduced-motion { overflow-y: auto; }
+}
+
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+@media (max-width: 900px) {
+  :root { --page-pad: 2rem; }
+
+  .carousel__card {
+    width: 75vw;
+    padding: 2.5rem 2.5rem;
+  }
+
+  .principle {
+    width: 85%;
+  }
+}
+
+@media (max-width: 768px) {
+  :root { --page-pad: 1.5rem; }
+
+  .nav {
+    padding: 1.25rem var(--page-pad);
+  }
+
+  .nav--scrolled {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .nav__right { gap: 1rem; }
+  .nav__link { font-size: 0.6rem; }
+  .nav__link--pill { padding: 0.35rem 0.9rem; }
+
+  .carousel__card {
+    width: 80vw;
+    padding: 2rem 2rem;
+  }
+
+  .principle {
+    width: 90%;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+
+  .principle.step.principle--left { left: 5%; }
+  .principle.step.principle--right { right: 5%; }
+
+  .principle__num {
+    font-size: clamp(3rem, 6vw, 5rem);
+  }
+
+  .panel--philosophy .billboard.step {
+    width: 90%;
+  }
+
+  .article-bottom__talk {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+  }
+
+  .article-bottom__artist-name {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+  }
+
+  .article-bottom__artists {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav__right { gap: 0.75rem; }
+
+  .nav__link:not(.nav__link--pill) {
+    display: none;
+  }
+
+  .opening__title {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .step--lg {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .snap__text {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .carousel__card {
+    width: 85vw;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .carousel__name {
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+  }
+
+  .principle {
+    flex-direction: column;
+    gap: 1rem;
+    width: 88%;
+    padding: 1.5rem;
+  }
+
+  .principle.step.principle--left { left: 3%; }
+  .principle.step.principle--center {
+    left: 50%;
+  }
+  .principle.step.principle--right { right: 3%; }
+
+  .principle__num {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .billboard--xl {
+    font-size: clamp(1.3rem, 6vw, 2rem);
+  }
+
+  .billboard--xxl {
+    font-size: clamp(1.6rem, 7vw, 2.5rem);
+  }
+
+  .billboard--lg {
+    font-size: clamp(1.1rem, 5vw, 1.6rem);
+  }
+
+  .billboard--md {
+    font-size: clamp(0.95rem, 4.5vw, 1.3rem);
+  }
+}
