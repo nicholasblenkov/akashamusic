@@ -260,19 +260,20 @@ img { display: block; max-width: 100%; }
 .biography {
   background: var(--cream);
   color: var(--black);
-  padding: 6rem var(--page-pad);
+  padding: 4rem var(--page-pad) 2rem;
 }
 
 .biography__inner {
-  max-width: 920px;
+  max-width: 620px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .biography__label-col {
-  padding-top: 0.15rem;
+  margin-bottom: 1.5rem;
 }
 
 .biography__text-col {
@@ -306,7 +307,7 @@ img { display: block; max-width: 100%; }
 .listen {
   background: var(--cream);
   color: var(--black);
-  padding: 60px var(--page-pad) 60px;
+  padding: 2rem var(--page-pad) 3rem;
 }
 
 .listen__inner {
@@ -791,15 +792,6 @@ img { display: block; max-width: 100%; }
 @media (max-width: 900px) {
   :root { --page-pad: 2rem; }
 
-  .biography__inner {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .biography__label-col {
-    margin-bottom: 1.5rem;
-  }
-
   .biography__text-col {
     max-width: 100%;
   }
@@ -843,8 +835,8 @@ img { display: block; max-width: 100%; }
   }
 
   .biography {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
   }
 
   .discography {

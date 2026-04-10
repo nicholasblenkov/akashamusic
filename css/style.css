@@ -327,6 +327,47 @@ button {
   align-self: flex-start;
 }
 
+/* --- Artist Pill Buttons --- */
+.artist__pills {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.artist__pills--right {
+  bottom: 3rem;
+  right: 3rem;
+}
+
+.artist__pills--left {
+  bottom: 3rem;
+  left: 3rem;
+}
+
+.artist__pills--bottom-left {
+  bottom: 3rem;
+  left: 3rem;
+}
+
+.artist__pill {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  color: var(--white);
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.artist__pill:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
 
 /* ===================================================
    SERVICES
@@ -667,6 +708,26 @@ button {
     left: 1.5rem;
   }
 
+  .artist__pills--right {
+    bottom: 2rem;
+    right: 1.5rem;
+  }
+
+  .artist__pills--left {
+    bottom: 2rem;
+    left: 1.5rem;
+  }
+
+  .artist__pills--bottom-left {
+    bottom: 2rem;
+    left: 1.5rem;
+  }
+
+  .artist__pill {
+    font-size: 0.7rem;
+    padding: 0.6rem 1.4rem;
+  }
+
   .artist__name--left,
   .artist__name--right,
   .artist__name--bottom-right {
@@ -777,7 +838,7 @@ button {
   .artist__name--left,
   .artist__name--right,
   .artist__name--bottom-right {
-    font-size: clamp(2rem, 14vw, 3.5rem);
+    font-size: clamp(1.4rem, 11vw, 3rem);
   }
 
   .accordion__trigger {

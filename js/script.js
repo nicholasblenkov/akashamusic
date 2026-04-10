@@ -46,6 +46,29 @@ document.addEventListener('DOMContentLoaded', () => {
     lazyVideos.forEach(video => videoObserver.observe(video));
   }
 
+  // --- Faster snap settling ---
+  const container = document.querySelector('.scroll-container');
+  if (container) {
+    let scrollTimeout;
+    container.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const sections = document.querySelectorAll('.section');
+        const containerTop = container.scrollTop;
+        const viewHeight = container.clientHeight;
+        let closest = sections[0];
+        let minDist = Infinity;
+        sections.forEach(s => {
+          const dist = Math.abs(s.offsetTop - containerTop);
+          if (dist < minDist) { minDist = dist; closest = s; }
+        });
+        if (minDist > 5 && minDist < viewHeight * 0.4) {
+          closest.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 80);
+    }, { passive: true });
+  }
+
   // --- Nav link smooth scroll within snap container ---
   const scrollContainer = document.querySelector('.scroll-container');
   const navLinks = document.querySelectorAll('a[href^="#"]');
