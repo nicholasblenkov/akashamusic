@@ -3,6 +3,23 @@
    Cosmic scroll journey — no text overlap, instant show/hide
    =================================================== */
 
+/* --- Fonts --- */
+@font-face {
+  font-family: 'Area Normal Black';
+  src: url('../fonts/fonnts.com-Area_Normal_Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Area Normal Black';
+  src: url('../fonts/fonnts.com-Area_Normal_Black_Italic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;

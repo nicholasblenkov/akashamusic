@@ -12,6 +12,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // --- Mobile Menu Toggle ---
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  if (menuToggle && mobileMenu) {
+    const closeMenu = () => {
+      menuToggle.classList.remove('is-open');
+      mobileMenu.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    };
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.classList.toggle('is-open');
+      mobileMenu.classList.toggle('is-open');
+      mobileMenu.setAttribute('aria-hidden', !isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+    const backdrop = mobileMenu.querySelector('.mobile-menu__backdrop');
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
+
   // --- Lazy-load videos via IntersectionObserver ---
   const lazyVideos = document.querySelectorAll('video[data-src]');
 
