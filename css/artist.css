@@ -2,6 +2,23 @@
    AKASHA MUSIC — Artist Page Styles (shared template)
    =================================================== */
 
+/* --- Fonts --- */
+@font-face {
+  font-family: 'Area Normal Black';
+  src: url('../fonts/fonnts.com-Area_Normal_Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Area Normal Black';
+  src: url('../fonts/fonnts.com-Area_Normal_Black_Italic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* --- Reset & Base --- */
 *, *::before, *::after {
   margin: 0;
@@ -869,7 +886,8 @@ img { display: block; max-width: 100%; }
   }
 
   .hero__name {
-    font-size: clamp(2.5rem, 14vw, 4rem);
+    font-size: clamp(1.8rem, 9vw, 4rem);
+    word-break: break-word;
   }
 
   .hero__stats {
